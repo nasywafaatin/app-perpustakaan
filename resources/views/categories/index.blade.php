@@ -5,6 +5,10 @@
 @section('content')
     <h1>Daftar Kategori</h1>
 
+    @if (session('success'))
+        <div style="color: #16a34a; margin-bottom: 15px; font-weight: bold;">{{ session('success') }}</div>
+    @endif
+
     <p><a href="{{ route('categories.create') }}" class="btn">+ Tambah Kategori</a></p>
 
     <table>
@@ -25,10 +29,10 @@
                     <td>
                         <a href="{{ route('categories.edit', $category['id']) }}">Edit</a>
                         |
-                        <form class="inline" action="{{ route('categories.destroy', $category['id']) }}" method="POST">
+                        <form class="inline" action="{{ route('categories.destroy', $category['id']) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit">Hapus</button>
+                            <button type="submit" style="background:none; border:none; color:#dc2626; cursor:pointer; padding:0; font:inherit;">Hapus</button>
                         </form>
                     </td>
                 </tr>
@@ -40,5 +44,7 @@
         </tbody>
     </table>
 
-    <p><em>Catatan: data di atas masih data dummy (array statis di Controller), belum dari database. Migration &amp; Model Eloquent baru dibuat di Pertemuan 5.</em></p>
+    <div style="margin-top: 20px;">
+        {{ $categories->links() }}
+    </div>
 @endsection

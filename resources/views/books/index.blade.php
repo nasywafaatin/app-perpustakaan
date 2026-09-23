@@ -5,6 +5,10 @@
 @section('content')
     <h1>Daftar Buku</h1>
 
+    @if (session('success'))
+        <div style="color: #16a34a; margin-bottom: 15px; font-weight: bold;">{{ session('success') }}</div>
+    @endif
+
     <p><a href="{{ route('books.create') }}" class="btn">+ Tambah Buku</a></p>
 
     <table>
@@ -16,7 +20,7 @@
                 <th>Penerbit</th>
                 <th>Tahun</th>
                 <th>Stok</th>
-                <th>Kategori</th>
+                <th>ID Kategori</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -29,16 +33,16 @@
                     <td>{{ $book['penerbit'] }}</td>
                     <td>{{ $book['tahun_terbit'] }}</td>
                     <td>{{ $book['stok'] }}</td>
-                    <td>{{ $book['kategori'] }}</td>
+                    <td>{{ $book['category_id'] }}</td>
                     <td>
                         <a href="{{ route('books.show', $book['id']) }}">Detail</a>
                         |
                         <a href="{{ route('books.edit', $book['id']) }}">Edit</a>
                         |
-                        <form class="inline" action="{{ route('books.destroy', $book['id']) }}" method="POST">
+                        <form class="inline" action="{{ route('books.destroy', $book['id']) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit">Hapus</button>
+                            <button type="submit" style="background:none; border:none; color:#dc2626; cursor:pointer; padding:0; font:inherit;">Hapus</button>
                         </form>
                     </td>
                 </tr>
@@ -50,5 +54,8 @@
         </tbody>
     </table>
 
-    <p><em>Catatan: data di atas masih data dummy (array statis di Controller), belum dari database. Migration &amp; Model Eloquent baru dibuat di Pertemuan 5.</em></p>
+    <div style="margin-top: 20px;">
+        {{ $books->links() }}
+    </div>
+
 @endsection
