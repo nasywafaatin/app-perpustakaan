@@ -18,7 +18,7 @@
     <form action="{{ route('members.store') }}" method="POST">
         @csrf
 
-        <label for="nama">Nama Lengkap</label>
+        <label for="nama">Nama</label>
         <input type="text" name="nama" id="nama" value="{{ old('nama') }}">
         @error('nama')
             <div class="error">{{ $message }}</div>
@@ -42,7 +42,7 @@
             <div class="error">{{ $message }}</div>
         @enderror
 
-        <label for="alamat">Alamat (opsional)</label>
+        <label for="alamat">Alamat</label>
         <textarea name="alamat" id="alamat" rows="3">{{ old('alamat') }}</textarea>
         @error('alamat')
             <div class="error">{{ $message }}</div>
@@ -50,9 +50,8 @@
 
         <label for="status">Status</label>
         <select name="status" id="status">
-            <option value="">-- Pilih Status --</option>
-            <option value="aktif" @selected(old('status') == 'aktif')>Aktif</option>
-            <option value="non-aktif" @selected(old('status') == 'non-aktif')>Non-Aktif</option>
+            <option value="aktif" @selected(old('status', 'aktif') == 'aktif')>Aktif</option>
+            <option value="nonaktif" @selected(old('status') == 'nonaktif')>Nonaktif</option>
         </select>
         @error('status')
             <div class="error">{{ $message }}</div>
